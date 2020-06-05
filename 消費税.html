@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>消費税を計算してみよう</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-primary">
+    <h1 class="navbar-brand">消費税を計算してみよう</h1>
+  </nav>
+
+  <main class="container mt-5">
+    <div class="card bg-light mb-3">
+      <div class="card-header">消費税計算</div>
+      <div class="card-body">
+        <p class="card-text">入力された値とチェックボックスで選択された消費税率から消費税を計算して出力してみましょう</p>
+      </div>
+    </div>
+
+    <div class="card bg-light mb-3">
+      <div class="card-header">「＝」ボタンを押したら消費税が計算されるようにしてね</div>
+      <div class="card-body">
+        <div class="form-inline">
+          <input type="text" class="form-control text-right mr-3" id="input">
+          <span class="mr-3">の</span>
+          <div>
+            <div class="custom-control custom-radio mr-2">
+              <input type="radio" class="custom-control-input" name="tax" value="10" id="tax10"><label class="custom-control-label" for="tax10">10%</label>
+            </div>
+            <div class="custom-control custom-radio mr-2">
+              <input type="radio" class="custom-control-input" name="tax" value="8"  id="tax8" ><label class="custom-control-label" for="tax8" >8%</label>
+            </div>
+          </div>
+          <button type="button" class="btn btn-info mr-3" id="equal">=</button>
+          <div id="result" class="h2 mb-0"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+  <script>
+    // ボタンのエレメントを取得
+    const btn = document.getElementById('equal');
+
+    // チェックボックスをクリックしたときのイベントをセットします
+    btn.addEventListener('click', () => {
+      // 入力を行うエレメントを取得
+      const input = document.getElementById('input');
+
+      // 入力された値を取得
+      const inputValue = input.value;
+
+      // ラジオボタンのノードを取得
+      const radioList = document.getElementsByName('tax') ;
+
+      // 消費税を取得
+      let tax = 0;
+      for(let i = 0; i < radioList.length; i++){
+        if (radioList[i].checked) {
+          //選択されたラジオボタンのvalue値を取得する
+          tax = radioList[i].value;
+          break;
+        }
+      }
+
+      // 入力された値
+      console.log(inputValue);
+
+      // 消費税
+      console.log(tax);
+
+      // 計算結果を出力するエレメントを取得
+      const result = document.getElementById('result');
+
+      // 計算結果を出力する[result.textContent = 計算結果]
+      result.textContent = Math.round(inputValue * ( 1 + tax * 0.01 ));
+    });
+  </script>
+</body>
+</html>
