@@ -39,6 +39,7 @@
   <script>
     // チェックボックスを選択します
     const checkbox = document.getElementById('customCheck1');
+    let count = 0;
 
     // チェックボックスをクリックしたときのイベントをセットします
     checkbox.addEventListener('click', () => {
@@ -56,24 +57,18 @@
       // チェック状態を解除する「checkbox.checked = false」
 
       // ここから条件式などを使用して状態を変更するためのロジックを書いてみてください
-      // if(!indeterminate && checked){
-      //   checkbox.indeterminate = true ;
-      // }else if(!indeterminate && !checked){
-      //   checkbox.checked = true ;
-      // }
 
+      count ++ ;
 
-      // if (count==1) {
-      //   checkbox.checked = true ;
-      //   console.log('a');
-      // } else if(count == 2) {
-      //   checkbox.checked = false ;
-      // } else if(count == 3 ){
-      //   checkbox.indeterminate = true ;
-      // } else if(count == 4) {
-      //   checkbox.indeterminate = false ;
-      //   count = 0 ;
-      // }
+      if(count%3 === 1){
+        checkbox.indeterminate = true;
+      }else if (count%3 ===2){
+        checkbox.checked = true;
+      }else{
+        checkbox.checked = false;
+      }
+      console.log(count);
+
     });
   </script>
 </body>
