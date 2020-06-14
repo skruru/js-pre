@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>クリックするごとにチェックのステートを変えてみよう</title>
-
+​
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
   <nav class="navbar navbar-dark bg-primary">
     <h1 class="navbar-brand">クリックするごとにチェックのステートを変えてみよう</h1>
   </nav>
-
+​
   <main class="container mt-5">
     <div class="card bg-light mb-3">
       <div class="card-header">3状態チェックボックスについて</div>
@@ -20,7 +20,7 @@
         <p class="card-text">「<a href="https://qiita.com/mk_summer/items/305f72fd725989a14ecc">3状態チェックボックス（HTML5だけど古いIEでも動く）</a>」を参考にして下記のチェックボックスをクリックするたびに「チェック状態」→「非チェック状態」→「中間状態」を繰り返すようにしてみましょう。</p>
       </div>
     </div>
-
+​
     <div class="card bg-light mb-3">
       <div class="card-header">クリックごとにチェックの状態を変えてね</div>
       <div class="card-body">
@@ -31,44 +31,54 @@
       </div>
     </div>
   </main>
-
+​
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+​
   <script>
     // チェックボックスを選択します
     const checkbox = document.getElementById('customCheck1');
-    let count = 0;
-
+​
     // チェックボックスをクリックしたときのイベントをセットします
     checkbox.addEventListener('click', () => {
-      // 中間状態かどうかを取得
-      const indeterminate = checkbox.indeterminate;
-      // チェックの状態を取得
-      const checked = checkbox.checked;
-
-      console.log(indeterminate);
-      console.log(checked);
-
+      console.log('クリック直後');
+      console.log('checked: ' + checkbox.checked);
+      console.log('indeterminate: ' + checkbox.indeterminate);
+      console.log('readOnly: ' + checkbox.readOnly);
+​
       // 中間状態をセットする「checkbox.indeterminate = true」
       // 中間状態を解除する「checkbox.indeterminate = false」
       // チェック状態をセットする「checkbox.checked = true」
       // チェック状態を解除する「checkbox.checked = false」
-
-      // ここから条件式などを使用して状態を変更するためのロジックを書いてみてください
-
-      count ++ ;
-
-      if(count%3 === 1){
-        checkbox.indeterminate = true;
-      }else if (count%3 ===2){
+      // 読み取り専用属性をセットする「checkbox.readOnly = true」
+      // 読み取り専用属性を解除する「checkbox.readOnly = false」
+​
+      /*
+      ラベルをクリックすると自動でcheckedが切り替えられます
+        「チェックされていない状態」ときにクリック
+          自動でchecked = trueにされる
+          下記のif (checked) {}が実行される(読み取り専用の「中間状態」になる)
+        「中間状態」のときにクリック
+          読み取り専用なので自動ではcheckedは切り替えられない
+          if (readOnly) {}が実行される(読み取り専用が解除され「チェック状態」になる)
+        「チェックされている状態」ときにクリック
+          自動でchecked = falseにされる
+          特に判定は存在しないので読み取り専用でない「チェックされていない状態」になる
+      */
+​
+      if (checkbox.readOnly) {
         checkbox.checked = true;
-      }else{
-        checkbox.checked = false;
+        checkbox.readOnly = false;
+      } else if (checkbox.checked) {
+        checkbox.indeterminate = true
+        checkbox.readOnly = true;
       }
-      console.log(count);
-
+​
+      console.log('属性変更後');
+      console.log('checked: ' + checkbox.checked);
+      console.log('indeterminate: ' + checkbox.indeterminate);
+      console.log('readOnly: ' + checkbox.readOnly);
     });
   </script>
 </body>
