@@ -80,7 +80,9 @@
       const result = document.getElementById('result');
 
       // 計算結果を出力する[result.textContent = 計算結果]
-      result.textContent = Math.round(inputValue * ( 1 + tax * 0.01 ));
+      // result.textContent = Math.round(inputValue * ( 1 + tax * 0.01 ));
+      result.textContent = Math.floor((inputValue * tax) / 100);
+      //　小数点以下は使わない　使う時はライブラリ(bignumber.js)
     });
   </script>
 </body>
